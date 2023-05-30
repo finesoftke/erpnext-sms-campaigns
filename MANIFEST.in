@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include sms_campaign *.css
+recursive-include sms_campaign *.csv
+recursive-include sms_campaign *.html
+recursive-include sms_campaign *.ico
+recursive-include sms_campaign *.js
+recursive-include sms_campaign *.json
+recursive-include sms_campaign *.md
+recursive-include sms_campaign *.png
+recursive-include sms_campaign *.py
+recursive-include sms_campaign *.svg
+recursive-include sms_campaign *.txt
+recursive-exclude sms_campaign *.pyc
