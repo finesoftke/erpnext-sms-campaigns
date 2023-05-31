@@ -59,12 +59,10 @@ class SMSCampaign(Document):
 		for row in data:
 			phone = row[query.phone_field]
 			msg=frappe.render_template(self.message, get_context(row))
-			print("phone: ") 
-			print(phone)
-			print("message: " + msg)
 
-			# if phone:
-			# 	send_sms(receiver_list = phone, msg = msg)
+
+			if phone:
+				send_sms(receiver_list = phone, msg = msg)
 			# send_sms(receiver_list = phone, msg = msg)
 						
 
