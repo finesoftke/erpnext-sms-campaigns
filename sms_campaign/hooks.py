@@ -102,16 +102,23 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"*": {
+		"on_update": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_update_sms",
+		"on_cancel": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_cancel_sms",
+		"on_submit": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_submit_sms",
+        "after_insert": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_after_insert_sms",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
+
+scheduler_events = {
+    "daily": [
+        "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_sheduled_sms"
+    ]
+}
 
 # scheduler_events = {
 #	"all": [
