@@ -62,7 +62,9 @@ class SMSCampaign(Document):
 			phone = format_phone_number(phone)
 
 			if phone:
-				send_sms(receiver_list = phone, msg = msg)
+				receiver_list = [phone]
+				send_sms(receiver_list = receiver_list, msg = msg)
+				frappe.db.commit()
 			# send_sms(receiver_list = phone, msg = msg)
 						
 
@@ -83,7 +85,7 @@ def format_phone_number(mobile_number):
     elif len(mobile_number) == 14:
         return "254" + mobile_number[5:]
 
-    raise None
+    return None
 
 def get_context(data):
 	data["nowdate"] = frappe.utils.nowdate
