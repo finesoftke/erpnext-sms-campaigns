@@ -59,13 +59,31 @@ class SMSCampaign(Document):
 		for row in data:
 			phone = row[query.phone_field]
 			msg=frappe.render_template(self.message, get_context(row))
-
+			phone = format_phone_number(phone)
 
 			if phone:
 				send_sms(receiver_list = phone, msg = msg)
 			# send_sms(receiver_list = phone, msg = msg)
 						
 
+def format_phone_number(mobile_number):
+    if mobile_number is None:
+        return None
+       
+    if len(mobile_number) == 10:
+        return "254" + mobile_number[1:]
+    elif len(mobile_number) == 9:
+        return "254" + mobile_number
+    elif len(mobile_number) == 12:
+        return "254" + mobile_number[3:]
+    elif len(mobile_number) == 13:
+        return "254" + mobile_number[4:]
+    elif len(mobile_number) == 11:
+        return "254" + mobile_number[2:]
+    elif len(mobile_number) == 14:
+        return "254" + mobile_number[5:]
+
+    raise None
 
 def get_context(data):
 	data["nowdate"] = frappe.utils.nowdate
