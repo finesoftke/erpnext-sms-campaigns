@@ -23,6 +23,29 @@ class SMSCampaign(Document):
 			parameters[param.label] = param.value
 		self.send_sms(parameters)
 
+	def onload(self):
+
+		if self.trigger_type == "DIRECT" or self.trigger_type == "SCHEDULED":
+			parameters = {}
+			for param in self.params:
+				parameters[param.label] = param.value
+
+			query = frappe.get_doc("SMS Campaign Query", self.query)
+			data = frappe.db.sql(query.query, parameters, as_dict=True)
+
+			if len(data) < 1:
+				frappe.msgprint("This query does not return any data. Therefore, no parameters and sms list will be shown.", title="No data for selected query")
+				return
+			
+			columns = list(data[0].keys())
+			self.set_onload("columns", columns)
+			rows = []
+			for row in data:
+				row["message"] = frappe.render_template(self.message, get_context(row))
+				rows.append(row)
+			
+			self.set_onload("rows", rows)
+
 	def update_next_run_date(self):
 		self.last_run_date = frappe.utils.nowdate()
 

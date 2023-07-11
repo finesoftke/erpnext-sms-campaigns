@@ -1,0 +1,8 @@
+<div class="clearfix"></div>
+<div style="display: flex; padding: 5px; justify-content: space-around; flex-wrap: wrap; background-color: #eeeeee">
+    {% for col in columns %}
+    <p><button data-param="{{col}}" style="margin: 6px;" class="btn btn-xs btn-default btn-param">
+        {{ col }}</button>
+    </p>
+    {% endfor %}
+</div>

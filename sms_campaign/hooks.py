@@ -12,7 +12,7 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/sms_campaign/css/sms_campaign.css"
-# app_include_js = "/assets/sms_campaign/js/sms_campaign.js"
+app_include_js = ["sms.bundle.js",]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/sms_campaign/css/sms_campaign.css"

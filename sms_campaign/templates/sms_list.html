@@ -1,0 +1,42 @@
+<style>
+    table.sms-list {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    .sms-list td, .sms-list th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+        
+    .sms-list tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    .sms-list tr:nth-child(even) td {
+    border: 1px solid #fff;
+    }
+</style>
+<table class="sms-list">
+    <thead>
+        <tr>
+            <th style="width: 30%;"> Message </th>
+            {% for col in columns %}
+            <th> {{col}} </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row["message"] }}</td>
+            {% for col in columns %}
+                {% if col != "message" %}
+                    <td>{{ row[col] }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

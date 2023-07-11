@@ -1,0 +1,6 @@
+{
+	"js/sms.min.js": [
+        "templates/sms_list.html",
+        "templates/sms_param_list.html"
+    ]
+}
