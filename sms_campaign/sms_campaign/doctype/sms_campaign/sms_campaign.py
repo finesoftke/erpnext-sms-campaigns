@@ -48,8 +48,8 @@ class SMSCampaign(Document):
 
 		else:
 			parameters = {}
-			doc_name = frappe.db.get_last_created(self.trigger_doctype)
-			parameters[frappe.db.get_value("SMS Campaign Query", self.query, "doc_name_field")] = doc_name
+			doc = frappe.db.get_last_created(self.trigger_doctype)
+			parameters[frappe.db.get_value("SMS Campaign Query", self.query, "doc_name_field")] = doc.name
 			for param in self.params:
 				parameters[param.label] = param.value
 
