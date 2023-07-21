@@ -48,7 +48,7 @@ class SMSCampaign(Document):
 
 		else:
 			parameters = {}
-			doc = self.get_all(self.trigger_doctype, ("creation"), limit=1, order_by="creation desc")
+			doc = frappe.get_all(self.trigger_doctype, ("creation"), limit=1, order_by="creation desc")
 			parameters[frappe.db.get_value("SMS Campaign Query", self.query, "doc_name_field")] = doc.name
 			for param in self.params:
 				parameters[param.label] = param.value
@@ -145,7 +145,7 @@ def send_sheduled_sms():
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_non_triggered_sms()
 		sms_campaign.update_next_run_date()
-		sms_campaign.save()
+		sms_campaign.save()	
 		frappe.db.commit()
 
 def send_triggered_after_insert_sms(doc, method=None):
