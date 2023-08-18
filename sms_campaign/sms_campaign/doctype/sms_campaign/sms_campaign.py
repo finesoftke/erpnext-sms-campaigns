@@ -172,8 +172,9 @@ def send_triggered_on_cancel_sms(doc, method=None):
 		sms_campaign.save()
 		frappe.db.commit()
 
+
 def send_triggered_on_update_sms(doc, method=None):
-	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Save", "trigger_doctype": doc.doctype})
+	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Update", "trigger_doctype": doc.doctype})
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_triggered_sms(doc.name)

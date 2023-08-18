@@ -10,18 +10,18 @@
  "field_order": [
   "identifier",
   "trigger_type",
+  "trigger_doctype",
   "column_break_ilxuj",
   "active",
   "query",
+  "trigger",
   "section_break_vtpfy",
   "params",
   "section_break_v9fde",
-  "trigger_doctype",
   "start_date",
   "column_break_qiqgh",
   "repeats",
   "repeats_every",
-  "trigger",
   "last_run_date",
   "next_run_date",
   "section_break_oi2wt",
@@ -83,7 +83,7 @@
    "fieldname": "trigger",
    "fieldtype": "Select",
    "label": "Trigger",
-   "options": "New\nSave\nSubmit\nCancel"
+   "options": "New\nSave\nSubmit\nCancel\nUpdate"
   },
   {
    "allow_on_submit": 1,
@@ -177,7 +177,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-06-20 13:34:04.938463",
+ "modified": "2023-08-18 09:41:49.782319",
  "modified_by": "Administrator",
  "module": "Sms Campaign",
  "name": "SMS Campaign",
