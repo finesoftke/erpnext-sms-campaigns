@@ -2,6 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('SMS Campaign', {
+
+	before_save: function(frm) {
+		frm.doc.__onload = "";
+
+	},
+
+	before_submit: function(frm) {
+		frm.doc.__onload = "";
+	},
+	
 	refresh: function(frm) {
 		if (frm.is_new()) {
 			frm.set_df_property("section_break_vtpfy", "hidden", 1);
