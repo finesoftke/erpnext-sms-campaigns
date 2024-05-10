@@ -24,7 +24,6 @@ class SMSCampaign(Document):
 		self.send_sms(parameters)
 
 	def onload(self):
-
 		if self.trigger_type == "DIRECT" or self.trigger_type == "SCHEDULED":
 			parameters = {}
 			for param in self.params:
@@ -101,16 +100,26 @@ class SMSCampaign(Document):
 
 	def send_sms(self, parameters):
 		query = frappe.get_doc("SMS Campaign Query", self.query)
-		data = frappe.db.sql(query.query, parameters, as_dict=True)
-		for row in data:
-			phone = row[query.phone_field]
-			msg=frappe.render_template(self.message, get_context(row))
-			phone = format_phone_number(phone)
 
-			if phone:
-				receiver_list = [phone]
-				send_sms(receiver_list = receiver_list, msg = msg)
-				frappe.db.commit()
+		frappe.enqueue(
+			"sms_campaign.sms_campaign.queue.send_sms_queued",
+			queue="default",
+			timeout=4000,
+			query=query,
+			parameters=parameters,
+			template=self.message
+		)
+		frappe.msgprint("The send sms job has been queued")
+		# data = frappe.db.sql(query.query, parameters, as_dict=True)
+		# for row in data:
+		# 	phone = row[query.phone_field]
+		# 	msg=frappe.render_template(self.message, get_context(row))
+		# 	phone = format_phone_number(phone)
+
+		# 	if phone:
+		# 		receiver_list = [phone]
+		# 		send_sms(receiver_list = receiver_list, msg = msg)
+		# 		frappe.db.commit()
 			# send_sms(receiver_list = phone, msg = msg)
 						
 
