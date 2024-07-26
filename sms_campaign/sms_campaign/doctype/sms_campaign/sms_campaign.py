@@ -154,32 +154,24 @@ def send_sheduled_sms():
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_non_triggered_sms()
 		sms_campaign.update_next_run_date()
-		sms_campaign.save()	
-		frappe.db.commit()
 
 def send_triggered_after_insert_sms(doc, method=None):
 	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "New", "trigger_doctype": doc.doctype})
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_triggered_sms(doc.name)
-		sms_campaign.save()
-		frappe.db.commit()
 
 def send_triggered_on_submit_sms(doc, method=None):
 	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Submit", "trigger_doctype": doc.doctype})
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_triggered_sms(doc.name)
-		sms_campaign.save()
-		frappe.db.commit()
 
 def send_triggered_on_cancel_sms(doc, method=None):
 	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Cancel", "trigger_doctype": doc.doctype})
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_triggered_sms(doc.name)
-		sms_campaign.save()
-		frappe.db.commit()
 
 
 def send_triggered_on_update_sms(doc, method=None):
@@ -187,5 +179,3 @@ def send_triggered_on_update_sms(doc, method=None):
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		sms_campaign.send_triggered_sms(doc.name)
-		sms_campaign.save()
-		frappe.db.commit()

@@ -1,4 +1,6 @@
-(()=>{frappe.templates.sms_list=`<style>
+(() => {
+  // frappe-html:/opt/bench/erpnext/apps/sms_campaign/sms_campaign/templates/sms_list.html
+  frappe.templates["sms_list"] = `<style>
     table.sms-list {
       font-family: arial, sans-serif;
       border-collapse: collapse;
@@ -39,12 +41,16 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>`;frappe.templates.sms_param_list=`<div class="clearfix"></div>
+</table>`;
+
+  // frappe-html:/opt/bench/erpnext/apps/sms_campaign/sms_campaign/templates/sms_param_list.html
+  frappe.templates["sms_param_list"] = `<div class="clearfix"></div>
 <div style="display: flex; padding: 5px; justify-content: space-around; flex-wrap: wrap; background-color: #eeeeee">
     {% for col in columns %}
     <p><button data-param="{{col}}" style="margin: 6px;" class="btn btn-xs btn-default btn-param">
         {{ col }}</button>
     </p>
     {% endfor %}
-</div>`;})();
-//# sourceMappingURL=sms.bundle.RRI3WLKM.js.map
+</div>`;
+})();
+//# sourceMappingURL=sms.bundle.6S2DCZMY.js.map
