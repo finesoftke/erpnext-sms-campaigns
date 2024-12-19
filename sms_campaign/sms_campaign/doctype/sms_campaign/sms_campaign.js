@@ -31,6 +31,7 @@ frappe.ui.form.on('SMS Campaign', {
 			};
 		});
 
+
 		if (!frm.is_new()) {
 			if (frm.fields_dict["sms_list"] && "columns" in frm.doc.__onload) {
 				$(frm.fields_dict["sms_list"].wrapper)
@@ -54,6 +55,33 @@ frappe.ui.form.on('SMS Campaign', {
 		}
 	},
 
+
+	trigger_doctype: function(frm) {
+		let get_select_options = function (df, parent_field) {
+			// Append parent_field name along with fieldname for child table fields
+			let select_value = parent_field ? df.fieldname + "," + parent_field : df.fieldname;
+
+			return {
+				value: select_value,
+				label: df.fieldname + " (" + __(df.label) + ")",
+			};
+		};
+		
+		frappe.db.get_doc("DocType", frm.doc.trigger_doctype)
+			.then(doc => {
+				let fields = doc.fields;
+
+				let options = $.map(fields, function (d) {
+					return in_list(frappe.model.no_value_type, d.fieldtype)
+						? null
+						: get_select_options(d);
+				});
+		
+				// set value changed options
+				frm.set_df_property("value_changed", "options", [""].concat(options));
+			})
+		
+	},
 
 	trigger_type: function(frm) {
 		frm.set_query("query", function() {
