@@ -10,10 +10,11 @@
  "field_order": [
   "identification",
   "query",
+  "channel",
   "column_break_gujbs",
   "trigger_type",
   "doc_name_field",
-  "phone_field",
+  "recepient_field",
   "section_break_0bfrh",
   "params"
  ],
@@ -57,20 +58,26 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "mobile",
-   "fieldname": "phone_field",
-   "fieldtype": "Data",
-   "label": "Phone Column",
-   "reqd": 1
-  },
-  {
    "fieldname": "section_break_0bfrh",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "label": "Channel",
+   "options": "SMS\nEmail"
+  },
+  {
+   "default": "mobile",
+   "fieldname": "recepient_field",
+   "fieldtype": "Data",
+   "label": "Recepient",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-31 11:10:11.010590",
+ "modified": "2025-01-02 16:48:12.261181",
  "modified_by": "Administrator",
  "module": "Sms Campaign",
  "name": "SMS Campaign Query",

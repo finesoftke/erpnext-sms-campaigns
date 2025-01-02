@@ -105,6 +105,7 @@ app_include_js = ["sms.bundle.js",]
 doc_events = {
 	"*": {
 		"on_update": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_update_sms",
+		"on_update_after_submit": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_update_sms",
 		"on_cancel": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_cancel_sms",
 		"on_submit": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_on_submit_sms",
         "after_insert": "sms_campaign.sms_campaign.doctype.sms_campaign.sms_campaign.send_triggered_after_insert_sms",

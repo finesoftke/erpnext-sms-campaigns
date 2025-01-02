@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-02 14:47:29.177090",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type",
+  "print_doctype",
+  "name_query_field",
+  "print_format",
+  "file_url_field"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Print Format\nFile",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.type=='Print Format'",
+   "fieldname": "print_doctype",
+   "fieldtype": "Link",
+   "label": "Doctype",
+   "mandatory_depends_on": "eval:doc.type=='Print Format'",
+   "options": "DocType"
+  },
+  {
+   "depends_on": "eval:doc.type=='Print Format'",
+   "fieldname": "name_query_field",
+   "fieldtype": "Data",
+   "label": "Name Query Field",
+   "mandatory_depends_on": "eval:doc.type=='Print Format'"
+  },
+  {
+   "depends_on": "eval:doc.type=='Print Format'",
+   "fieldname": "print_format",
+   "fieldtype": "Link",
+   "label": "Print Format ",
+   "mandatory_depends_on": "eval:doc.type=='Print Format'",
+   "options": "Print Format"
+  },
+  {
+   "depends_on": "eval:doc.type=='File'",
+   "fieldname": "file_url_field",
+   "fieldtype": "Data",
+   "label": "File Url field",
+   "mandatory_depends_on": "eval:doc.type=='File'"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-01-02 14:54:10.102593",
+ "modified_by": "Administrator",
+ "module": "Sms Campaign",
+ "name": "Campaign Email Attachment",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

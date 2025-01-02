@@ -27,6 +27,7 @@ frappe.ui.form.on('SMS Campaign', {
 			return {
 				"filters": {
 					"trigger_type": frm.doc.trigger_type,
+					"channel": frm.doc.channel
 				}
 			};
 		});
@@ -47,7 +48,18 @@ frappe.ui.form.on('SMS Campaign', {
 						let param = $(this).data("param"); 
 						let message = frm.doc.message || "";
 						frm.set_value("message", message + "{{" + param + "}}");
-						console.log($(frm.fields_dict["message"]))
+					});
+			}
+			
+			
+			if (frm.fields_dict["subject_parameters"] && "columns" in frm.doc.__onload) {
+				$(frm.fields_dict["subject_parameters"].wrapper)
+					.html(frappe.render_template("sms_param_list", frm.doc.__onload))
+					.find(".btn-param")
+					.on("click", function () {
+						let param = $(this).data("param"); 
+						let subject = frm.doc.email_subject || "";
+						frm.set_value("email_subject", subject + "{{" + param + "}}");
 					});
 			}
 				

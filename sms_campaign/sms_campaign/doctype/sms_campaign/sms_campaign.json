@@ -12,6 +12,7 @@
   "trigger_type",
   "trigger_doctype",
   "column_break_ilxuj",
+  "channel",
   "active",
   "query",
   "trigger",
@@ -26,8 +27,11 @@
   "last_run_date",
   "next_run_date",
   "section_break_oi2wt",
+  "email_subject",
+  "subject_parameters",
   "message",
   "message_parameters",
+  "attachments",
   "amended_from",
   "sms_list_tab",
   "sms_list"
@@ -160,7 +164,7 @@
   {
    "fieldname": "sms_list_tab",
    "fieldtype": "Tab Break",
-   "label": "SMS List",
+   "label": "Campaign List",
    "read_only": 1
   },
   {
@@ -179,12 +183,38 @@
    "fieldname": "value_changed",
    "fieldtype": "Select",
    "label": "Value Changed"
+  },
+  {
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "label": "Channel",
+   "options": "SMS\nEmail"
+  },
+  {
+   "depends_on": "eval:doc.channel=='Email'",
+   "fieldname": "subject_parameters",
+   "fieldtype": "HTML",
+   "label": "Subject Params"
+  },
+  {
+   "depends_on": "eval:doc.channel==\"Email\"",
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "Campaign Email Attachment"
+  },
+  {
+   "depends_on": "eval:doc.channel=='Email'",
+   "fieldname": "email_subject",
+   "fieldtype": "Data",
+   "label": "Email Subject ",
+   "mandatory_depends_on": "eval:doc.channel=='Email'"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-21 12:23:11.830817",
+ "modified": "2025-01-02 14:57:22.970258",
  "modified_by": "Administrator",
  "module": "Sms Campaign",
  "name": "SMS Campaign",

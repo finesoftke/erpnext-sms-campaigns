@@ -102,15 +102,29 @@ class SMSCampaign(Document):
 	def send_sms(self, parameters):
 		query = frappe.get_doc("SMS Campaign Query", self.query)
 
-		frappe.enqueue(
-			"sms_campaign.sms_campaign.queue.send_sms_queued",
-			queue="default",
-			timeout=4000,
-			query=query,
-			parameters=parameters,
-			template=self.message
-		)
-		frappe.msgprint("The send sms job has been queued")
+		if self.channel == 'SMS':
+			frappe.enqueue(
+				"sms_campaign.sms_campaign.queue.send_sms_queued",
+				queue="default",
+				timeout=4000,
+				query=query,
+				parameters=parameters,
+				template=self.message
+			)
+			frappe.msgprint("The send sms job has been queued")
+		else:
+			frappe.enqueue(
+				"sms_campaign.sms_campaign.queue.send_email_queued",
+				queue="default",
+				timeout=4000,
+				query=query,
+				parameters=parameters,
+				template=self.message,
+				subject=self.email_subject,
+				attachements=self.attachments,
+			)
+			frappe.msgprint("The send sms job has been queued")
+
 		# data = frappe.db.sql(query.query, parameters, as_dict=True)
 		# for row in data:
 		# 	phone = row[query.phone_field]
@@ -182,15 +196,19 @@ def send_triggered_on_cancel_sms(doc, method=None):
 
 
 def send_triggered_on_update_sms(doc, method=None):
+	#print("Triggered on update")
 	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Update", "trigger_doctype": doc.doctype})
 	for sms_campaign in sms_campaigns:
 		sms_campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		
 		sms_campaign.send_triggered_sms(doc.name)
+		
 
+	#print(doc.doctype)
 	sms_campaigns = frappe.get_all("SMS Campaign", filters={"trigger_type": "TRIGGERED", "docstatus": 1, "active":1, "trigger": "Value Change", "trigger_doctype": doc.doctype})
-	
+	#print(sms_campaigns)
 	for sms_campaign in sms_campaigns:
+		#print("trying to send sms right here: ")
 		campaign = frappe.get_doc("SMS Campaign", sms_campaign.name)
 		
 		if frappe.db.has_column(doc.doctype, campaign.value_changed):
@@ -201,8 +219,10 @@ def send_triggered_on_update_sms(doc, method=None):
 			if cast(fieldtype, doc.get(campaign.value_changed)) == cast(fieldtype, field_value_before_save):
 				# value not changed
 				return
-			
-			campaign.send_triggered_sms(doc.name)
+			#print("trying to send sms right here: ")
+			#print(doc.get(campaign.value_changed))
+			if doc.get(campaign.value_changed) == campaign.new_value or not campaign.new_value or campaign.new_value == "":
+				campaign.send_triggered_sms(doc.name)
 
 
 def eval_condition(campaign):

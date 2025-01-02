@@ -6,13 +6,51 @@ def send_sms_queued(query, parameters, template):
 
     data = frappe.db.sql(query.query, parameters, as_dict=True)
     for row in data:
-        phone = row[query.phone_field]
+        phone = row[query.recepient_field]
         msg=frappe.render_template(template, get_context(row))
         phone = format_phone_number(phone)
         
         if phone:
             receiver_list = [phone]
             send_sms(receiver_list = receiver_list, msg = msg)
+            frappe.db.commit()
+
+def send_email_queued(query, parameters, template, subject, attachments):
+    data = frappe.db.sql(query.query, parameters, as_dict=True)
+    for row in data:
+        email = row[query.recepient_field]
+        msg=frappe.render_template(template, get_context(row))
+        subj = frappe.render_template(subject, get_context(row))
+
+        attachs = []
+
+        for att in attachments:
+            if att.type == 'File':
+                files = frappe.get_all("File", filters ={"file_url": row[att.file_url_field]})
+
+                if len(files) > 0:
+                    file = file[0]
+                    file_doc = frappe.get_doc("File", file.name)
+
+
+                    filename = file_doc.file_name
+
+                    file_path = frappe.utils.get_site_path("", file_doc.file_url.lstrip("/"))
+                    with open(file_path, "rb") as file_content:
+                        attachs.append({"fcontent": file_content.read(), "fname": filename})
+            else:
+                attachs.append({frappe.attach_print(att.print_doctype, row[att.name_query_field], file_name=row[att.name_query_field])})
+
+        
+        
+        if email:
+            receiver_list = [email]
+            frappe.sendmail(
+                recipients=receiver_list,
+                message=msg,
+                subject=subj,
+                attachments=attachs,
+            )
             frappe.db.commit()
 
 
